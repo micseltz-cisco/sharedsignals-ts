@@ -6,3 +6,4 @@ __pycache__
 py_openid_sse.egg-info
 jwks.json
 .dccache
+node_modules
