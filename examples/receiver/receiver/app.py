@@ -78,6 +78,8 @@ def create_app(config_filename: str = "config.cfg"):
     @app.route('/event', methods=['POST'])
     def receive_event():
         body = request.get_data()
+        logging.basicConfig(level=logging.INFO)
+        logging.info(f"received event body: {body}")
         event = client.decode_body(body)
         app.logger.info(json.dumps(event, indent=2))
         return "", 202

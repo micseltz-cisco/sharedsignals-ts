@@ -8,6 +8,7 @@ from typing import Union, Any
 import requests
 import jwt
 from jwcrypto.jwk import JWKSet
+import logging
 
 
 class TransmitterClient:
@@ -31,6 +32,8 @@ class TransmitterClient:
         self.jwks = JWKSet.from_json(jwks_response.text)
 
     def decode_body(self, body: Union[str, bytes]):
+        logging.basicConfig(level=logging.INFO)
+        logging.info(f"Decoding body: {body}")
         kid = jwt.get_unverified_header(body)["kid"]
         jwk = self.jwks.get_key(kid)
         key = jwt.PyJWK(jwk).key

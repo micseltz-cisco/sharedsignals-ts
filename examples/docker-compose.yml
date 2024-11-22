@@ -35,6 +35,20 @@ services:
   #     - CONFIG_FILENAME=config.cfg
   #     - FLASK_ENV=development
 
+  receiver:
+    depends_on:
+      - transmitter
+    build:
+      context: ./receiver/receiver-ts
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./src:/usr/src
+    # environment:
+    #   - CONFIG_FILENAME=config.cfg
+    #   - FLASK_ENV=development
+
 volumes:
   # we will store our JWKS file here so that it is persistent between builds
   keys-volume:

@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { TransmitterClient } from './client';
 import config from './config';
+import getRawBody from 'raw-body';
+
 import axios from 'axios';
 
 const app = express();
@@ -35,7 +37,7 @@ initializeClient();
 
 app.post('/event', async (req, res) => {
     try {
-        const event = await client.decodeBody(req.body);
+        const event = await client.decodeBody((await getRawBody(req)).toString());
         console.log(JSON.stringify(event, null, 2));
         res.sendStatus(202);
     } catch (error) {

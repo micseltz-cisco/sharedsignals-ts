@@ -1,14 +1,14 @@
 const config = {
-    transmitterUrl: 'https://localhost:443',
+    transmitterUrl: 'https://transmitter',
     audience: 'http://example_receiver',
     bearer: '',
     verify: true,
-    receiverUrl: 'http://localhost:3000',
+    receiverUrl: 'http://receiver:5003',
     subjects: [{
         "format": "email",
         "email": "user@example.com"
     }],
-    port: 3000
+    port: 5003
 };
 
 export default config;

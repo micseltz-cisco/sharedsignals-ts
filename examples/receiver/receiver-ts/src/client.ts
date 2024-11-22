@@ -40,12 +40,16 @@ export class TransmitterClient {
     }
 
     async decodeBody(body: string) {
-        const decodedHeader = jwt.decode(body, { complete: true }) as any;
+        console.log('Decoding body:', body);
+        const decodedHeader = jwt.decode(body, { complete: true, });
+        if (!decodedHeader) {
+            throw new Error('Invalid JWT');
+        }
         const kid = decodedHeader.header.kid;
         const key = await this.jwks.getSigningKey(kid);
         const signingKey = key.getPublicKey();
         return jwt.verify(body, signingKey, {
-            algorithms: [decodedHeader.header.alg],
+            algorithms: [decodedHeader.header.alg as jwt.Algorithm],
             issuer: this.ssfConfig.issuer,
             audience: this.audience
         });
